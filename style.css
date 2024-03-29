@@ -1,20 +1,28 @@
-body {
-    font-family: NeueHaasGrotesk, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+body, h1, p {
     margin: 0;
     padding: 0;
-    color: #000;
 }
 
-header, footer {
-    background-color: #f1f1f1;
-    padding: 20px;
+.container {
+    font-family: 'Open Sans', sans-serif;
+    color: #000;
     text-align: center;
+    margin: 0;
+    padding: 40px;
 }
 
-main {
-    padding: 20px;
+h1 {
+    font-size: 4em;
+    margin-bottom: 0.5em;
 }
 
-h1, h2 {
-    color: #000;
+p {
+    font-size: 1.2em;
+}
+
+footer p {
+    font-size: 1em;
+    margin-top: 4em;
 }
