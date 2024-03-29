@@ -1,17 +1,18 @@
 .video-wrapper {
-    width: 25%; /* Imposta la larghezza del contenitore del video a 25% della larghezza del suo contenitore padre */
-    padding-top: 14.0625%; /* Imposta il padding top a 25% dell'aspect ratio originale (9/16) */
-    margin: auto; /* Centra il contenitore */
-    position: relative; /* Per il posizionamento assoluto del video */
+    position: relative;
+    width: 100%; /* il contenitore del video sarà largo quanto il suo contenitore padre */
+    padding-top: 56.25%; /* mantiene un aspect ratio di 16:9 */
+    margin: auto; /* centra il contenitore se necessario */
 }
 
 .video-wrapper video {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Fa sì che il video riempia il .video-wrapper */
-    height: auto; /* Mantiene l'aspect ratio */
+    width: 100%; /* Il video riempie completamente il .video-wrapper */
+    height: 100%;
 }
+
 
 .overlay {
     position: absolute;
@@ -29,3 +30,19 @@
     padding: 10px 20px; /* or the padding you prefer */
     border-radius: 5px; /* optional, for rounded corners */
 }
+
+@media (max-width: 768px) {
+    .video-wrapper {
+        width: 50%; /* Imposta la larghezza a 50% per schermi medio-piccoli */
+        padding-top: calc(50% * 9 / 16); /* Adegua il padding-top per mantenere l'aspect ratio */
+    }
+}
+
+@media (max-width: 480px) {
+    .video-wrapper {
+        width: 75%; /* Imposta la larghezza a 75% per schermi piccoli */
+        padding-top: calc(75% * 9 / 16); /* Adegua il padding-top per mantenere l'aspect ratio */
+    }
+}
+
+
