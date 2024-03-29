@@ -1,13 +1,17 @@
 .video-wrapper {
-    width: 25%; /* Riduci la larghezza del contenitore */
-    height: 0;
-    padding-bottom: 56.25%; /* Basato su un aspect ratio di 16:9 */
-    margin: auto; /* Centra il contenitore */
+    width: 25%; /* Larghezza del video come percentuale del contenitore */
+    padding-top: calc(25% * (9 / 16)); /* Mantiene l'aspect ratio basato sulla nuova larghezza */
+    margin-left: auto;
+    margin-right: auto; /* Centra il video-wrapper orizzontalmente */
+    position: relative; /* Per il posizionamento assoluto degli elementi figli come .overlay */
 }
 
 .video-wrapper video {
-    width: 25%; /* Riduci del 75% rispetto al 100% originale */
-    height: auto; /* Mantiene l'aspect ratio del video */
+    width: 100%; /* Fa sì che il video riempia il .video-wrapper */
+    height: auto; /* Mantiene l'aspect ratio */
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .overlay {
