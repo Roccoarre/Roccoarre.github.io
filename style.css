@@ -1,6 +1,6 @@
 .video-wrapper {
     position: relative;
-    width: 100%; /* or the width you prefer */
+    width: 25%; /* or the width you prefer */
     height: 0;
     padding-bottom: 56.25%; /* maintains a 16:9 aspect ratio */
 }
