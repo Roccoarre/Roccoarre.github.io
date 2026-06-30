@@ -115,6 +115,7 @@ const extraCarouselImg = document.getElementById('project-extra-carousel-img');
 const extraCarouselPrev = document.getElementById('extra-carousel-prev');
 const extraCarouselNext = document.getElementById('extra-carousel-next');
 const extraCarouselIndicator = document.getElementById('extra-carousel-indicator');
+const extraCarouselCreditEl = document.getElementById('project-extra-carousel-credit');
 const videoCarouselEl = document.getElementById('project-video-carousel');
 const videoCarouselCaption = document.getElementById('project-video-carousel-caption');
 const videoCarouselVideo = document.getElementById('project-video-carousel-video');
@@ -459,8 +460,21 @@ function openProjectDetail(index){
     extraCarouselPrev.onclick = () => showExtraImage(extraIndex - 1);
     extraCarouselNext.onclick = () => showExtraImage(extraIndex + 1);
     extraCarouselEl.hidden = false;
+    if (extraCarouselCreditEl){
+      if (ec.photoCredit){
+        extraCarouselCreditEl.innerHTML = `Photo by <a href="${ec.photoCredit.url}" target="_blank" rel="noopener">${escapeHtml(ec.photoCredit.name)}</a>`;
+        extraCarouselCreditEl.hidden = false;
+      } else {
+        extraCarouselCreditEl.hidden = true;
+        extraCarouselCreditEl.innerHTML = '';
+      }
+    }
   } else if (extraCarouselEl){
     extraCarouselEl.hidden = true;
+    if (extraCarouselCreditEl){
+      extraCarouselCreditEl.hidden = true;
+      extraCarouselCreditEl.innerHTML = '';
+    }
   }
 
   if (p.videoCarousel && videoCarouselEl){

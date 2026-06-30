@@ -109,9 +109,8 @@ img{ max-width: 100%; display: block; }
 @media (max-width: 640px){
   /* a quella larghezza l'orologio centrato finisce sotto/sopra al menu: lo togliamo, è solo decorativo */
   .header-clock{ display: none; }
-  /* Pr0jects/Ab0ut vanno su una riga propria, centrati, per non sovrapporsi al logo */
-  .site-header{ flex-wrap: wrap; row-gap: 14px; }
-  .nav{ width: 100%; justify-content: center; }
+  /* Pr0jects/Ab0ut restano in alto a destra, sulla stessa riga del logo e del pulsante audio */
+  .nav{ gap: 16px; font-size: 11px; }
 }
 
 .logo{
@@ -227,7 +226,7 @@ img{ max-width: 100%; display: block; }
   display: block;
   /* il nero del file video non è un nero puro (rumore di compressione): il contrasto lo schiaccia
      verso lo 0 così il blend mode lo nasconde davvero, invece di lasciare visibile il riquadro */
-  filter: contrast(1.7) blur(0.8px);
+  filter: contrast(1.7);
   mix-blend-mode: lighten;
 }
 @media (max-width: 720px){
@@ -613,6 +612,10 @@ img{ max-width: 100%; display: block; }
 
 .image-gallery-carousel{
   position: relative;
+}
+.image-gallery-carousel img{
+  aspect-ratio: 4/5;
+  object-fit: cover;
 }
 
 .image-gallery-caption{

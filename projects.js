@@ -87,8 +87,8 @@ const PROJECTS = [
     description: "Venetocore is a series of events and a collective, founded in May 2024, dedicated to championing the underground music scene of the Veneto region. Working directly within the local area to give space and a voice to local musicians and artists, the project stays away from commercial circuits to offer a radical alternative to the conventional night out, aiming to turn local venues into shared listening ecosystems.",
     note: "More than just an event, it's a community: connecting people through music, bringing together new generations, and giving visibility to digital electronic niches and emerging local talent. The visual identity of each poster — where photography and graphic design merge with regional iconography — is at the aesthetic core of the project, shaping an identity that's both local and global.",
     images: [
-      "assets/@loraw-20.jpg",
-      "assets/@loraw-23.jpg"
+      "assets/@loraw-23.jpg",
+      "assets/@loraw-20.jpg"
     ],
     ratio: "4/5",
     link: "#",
@@ -100,7 +100,8 @@ const PROJECTS = [
         "assets/DSC00995.JPG",
         "assets/pc.jpeg",
         "assets/WhatsApp Image 2026-06-29 at 23.31.26 (1).jpeg"
-      ]
+      ],
+      photoCredit: { name: "Emanuele Argentieri", url: "https://www.instagram.com/feb.21.2002/" }
     },
     extraVideo: {
       video: "assets/REEL 2 VENETOCORE def.mp4",
@@ -220,10 +221,10 @@ const PROJECTS = [
     description: "MDGN is an independent music project born in 2021 in the province of Treviso. Its sound identity is built around a blend of electronic music and avant-pop atmospheres, with a strong focus on experimentation and timbral research. The visual side is an integral part of the band's identity, curated with the same care as the songwriting and music production, with the goal of creating a coherent and recognizable imagery.",
     images: [
       "assets/P1000962-HDR.jpg",
-      "assets/1-43.png",
+      "assets/1-43.jpg",
       "assets/POS2.jpg",
-      "assets/1-68.png",
-      "assets/P1001039-HDR-Modifica.png"
+      "assets/1-68.jpg",
+      "assets/P1001039-HDR-Modifica.jpg"
     ],
     ratio: "2/3",
     link: "#",
