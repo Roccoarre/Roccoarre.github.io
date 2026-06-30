@@ -101,10 +101,17 @@ img{ max-width: 100%; display: block; }
   text-transform: uppercase;
   margin: 0;
   white-space: nowrap;
+  color: #fff;
+  /* si "inverte" rispetto a quello che ha sotto: su sfondo nero resta bianco,
+     su sfondo/testo bianco diventa nero, così resta sempre leggibile */
+  mix-blend-mode: difference;
 }
 @media (max-width: 640px){
   /* a quella larghezza l'orologio centrato finisce sotto/sopra al menu: lo togliamo, è solo decorativo */
   .header-clock{ display: none; }
+  /* Pr0jects/Ab0ut vanno su una riga propria, centrati, per non sovrapporsi al logo */
+  .site-header{ flex-wrap: wrap; row-gap: 14px; }
+  .nav{ width: 100%; justify-content: center; }
 }
 
 .logo{
@@ -218,6 +225,10 @@ img{ max-width: 100%; display: block; }
   width: 100%;
   height: auto;
   display: block;
+  /* il nero del file video non è un nero puro (rumore di compressione): il contrasto lo schiaccia
+     verso lo 0 così il blend mode lo nasconde davvero, invece di lasciare visibile il riquadro */
+  filter: contrast(1.7) blur(0.8px);
+  mix-blend-mode: lighten;
 }
 @media (max-width: 720px){
   .hero-center-image{ width: clamp(140px, 45vw, 220px); }
@@ -228,13 +239,15 @@ img{ max-width: 100%; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(15%);
+  /* contrast/brightness schiacciano la grana di compressione nelle zone scure, così il video
+     si fonde con il nero piatto del resto del sito invece di avere uno stacco visibile */
+  filter: grayscale(15%) contrast(1.15) brightness(0.85);
 }
 .hero-media::after{
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.6) 75%, rgba(0,0,0,0.92) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.95) 100%);
 }
 
 .hero-content{
@@ -243,13 +256,13 @@ img{ max-width: 100%; display: block; }
   width: 100%;
   padding: 0 var(--pad) 48px;
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 40px;
+  gap: 12px 40px;
 }
 
 .hero-meta{
-  margin-left: auto;
   font-family: var(--mono);
   font-size: 12px;
   color: var(--muted);
@@ -260,6 +273,16 @@ img{ max-width: 100%; display: block; }
   margin-bottom: 4px;
 }
 .hero-meta span{ display: block; color: var(--fg); margin-top: 4px; }
+
+.hero-clock{
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+  white-space: nowrap;
+}
 
 .scroll-cue{
   position: absolute;
@@ -443,7 +466,7 @@ img{ max-width: 100%; display: block; }
   flex-direction: column;
   gap: 48px;
 }
-.project-detail-body--stacked .project-detail-media{
+.project-detail-body--stacked .project-detail-media-col{
   order: 2;
   max-width: 900px;
   width: 100%;
@@ -465,6 +488,67 @@ img{ max-width: 100%; display: block; }
   padding-top: 48px;
   border-top: 1px solid var(--line);
   text-align: center;
+}
+
+.project-extra-carousel[hidden]{
+  display: none !important;
+}
+.project-extra-carousel{
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+
+.project-extra-carousel-media{
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 16/9; /* default, sovrascritto via JS in base al ratio del progetto */
+  overflow: hidden;
+  background: var(--line);
+}
+.project-extra-carousel-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.project-video-carousel[hidden]{
+  display: none !important;
+}
+.project-video-carousel{
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+
+.project-video-carousel-caption[hidden]{
+  display: none !important;
+}
+.project-video-carousel-caption{
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 24px;
+}
+
+.project-video-carousel-media{
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 16/9; /* default, sovrascritto via JS in base al ratio del progetto */
+  overflow: hidden;
+  background: var(--line);
+}
+.project-video-carousel-media video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .project-image-gallery{
@@ -491,20 +575,44 @@ img{ max-width: 100%; display: block; }
 
 .image-gallery-grid{
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 32px;
   max-width: 700px;
   margin: 0 auto;
+}
+.image-gallery-grid--single{
+  grid-template-columns: minmax(0, 1fr);
 }
 @media (max-width: 560px){
   .image-gallery-grid{ grid-template-columns: 1fr; max-width: 400px; }
 }
 
-.image-gallery-item img{
+.image-gallery-item{
+  min-width: 0;
+}
+.image-gallery-item--full{
+  grid-column: 1 / -1;
+}
+
+.image-gallery-bio{
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+.image-gallery-bio .project-detail-note{
+  margin-bottom: 0;
+}
+
+.image-gallery-item img,
+.image-gallery-item video{
   width: 100%;
   height: auto;
   display: block;
   background: var(--line);
+}
+
+.image-gallery-carousel{
+  position: relative;
 }
 
 .image-gallery-caption{
@@ -514,6 +622,12 @@ img{ max-width: 100%; display: block; }
   color: var(--muted);
   margin: 12px 0 0;
 }
+.image-gallery-caption a{
+  color: var(--muted);
+  text-decoration: underline;
+  transition: color 0.1s linear;
+}
+.image-gallery-caption a:hover{ color: var(--fg); }
 
 .project-extra-video-title{
   font-family: var(--display);
@@ -548,6 +662,22 @@ img{ max-width: 100%; display: block; }
 
 .project-extra-video .project-watch-link{
   margin-top: 32px;
+}
+
+.project-extra-video-caption{
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 640px;
+  margin: 16px auto 0;
+}
+
+.image-gallery-video-watch{
+  text-align: center;
+}
+.image-gallery-item .project-watch-link{
+  margin-top: 16px;
 }
 
 .project-video-gallery-title{
@@ -602,6 +732,31 @@ img{ max-width: 100%; display: block; }
   overflow: hidden;
   background: var(--line);
 }
+
+.project-detail-media-col{
+  text-align: center;
+}
+
+#project-media-watch{
+  margin-top: 24px;
+}
+
+.project-photo-credit[hidden]{
+  display: none !important;
+}
+.project-photo-credit{
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+.project-photo-credit a{
+  color: var(--muted);
+  text-decoration: underline;
+  transition: color 0.1s linear;
+}
+.project-photo-credit a:hover{ color: var(--fg); }
 .project-detail-media img,
 .project-detail-media video{
   width: 100%;
@@ -736,6 +891,9 @@ img{ max-width: 100%; display: block; }
   line-height: 1.6;
 }
 
+.project-watch-link[hidden]{
+  display: none !important;
+}
 .project-watch-link{
   display: inline-flex;
   align-items: center;
@@ -787,17 +945,6 @@ img{ max-width: 100%; display: block; }
 
 @media (max-width: 720px){
   .project-row a{ grid-template-columns: 50px 1fr auto; }
-  .project-thumb-mobile{
-    display: block;
-    width: 100%;
-    aspect-ratio: 4/5; /* default, sovrascritto via JS per progetti con un ratio diverso */
-    object-fit: cover;
-    margin-top: 14px;
-    grid-column: 1 / -1;
-  }
-}
-@media (min-width: 721px){
-  .project-thumb-mobile{ display: none; }
 }
 
 /* ---------- About ---------- */
@@ -863,6 +1010,13 @@ img{ max-width: 100%; display: block; }
   color: var(--fg);
 }
 
+@media (max-width: 640px){
+  /* solo da telefono: foto e bottone CV centrati invece che a sinistra */
+  .about-photo{ margin-left: auto; margin-right: auto; }
+  .about-side{ text-align: center; }
+  .about-side dl{ text-align: left; }
+}
+
 /* ---------- Contact / footer ---------- */
 
 .contact{
@@ -888,6 +1042,7 @@ img{ max-width: 100%; display: block; }
 
 .contact-links{
   display: flex;
+  flex-wrap: wrap;
   justify-self: end;
   gap: 24px;
 }
@@ -901,6 +1056,9 @@ img{ max-width: 100%; display: block; }
   .contact-email,
   .contact-links{
     justify-self: center;
+  }
+  .contact-links{
+    justify-content: center;
   }
 }
 

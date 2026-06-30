@@ -34,7 +34,7 @@
       </svg>
     </button>
   </div>
-  <p class="header-clock" id="hero-clock"></p>
+  <p class="header-clock">Digital Portfolio</p>
   <nav class="nav" aria-label="Main navigation">
     <a href="#progetti">Pr0jects</a>
     <a href="#about">Ab0ut</a>
@@ -56,6 +56,7 @@
       </video>
     </div>
     <div class="hero-content">
+      <p class="hero-clock" id="hero-clock"></p>
       <p class="hero-meta">
         Sound &amp; Visual identity
         <span>Milan / Italy</span>
@@ -68,7 +69,7 @@
     <div class="wrap">
       <div class="section-head">
         <div>
-          <span class="eyebrow">Selected work</span>
+          <span class="eyebrow">Selected works</span>
           <h2 class="section-title">Pr0jects</h2>
         </div>
         <span class="section-count" id="project-count"></span>
@@ -81,10 +82,56 @@
           <span aria-hidden="true">←</span> Back to projects
         </button>
         <div class="project-detail-body">
-          <div class="project-detail-media">
-            <img id="project-detail-img" src="" alt="">
-            <video id="project-detail-video" muted loop playsinline autoplay></video>
-            <button type="button" class="video-audio-toggle" id="video-audio-toggle" aria-pressed="false" aria-label="Turn video audio on" hidden>
+          <div class="project-detail-media-col">
+            <div class="project-detail-media">
+              <img id="project-detail-img" src="" alt="">
+              <video id="project-detail-video" muted loop playsinline autoplay></video>
+              <button type="button" class="video-audio-toggle" id="video-audio-toggle" aria-pressed="false" aria-label="Turn video audio on" hidden>
+                <svg class="icon-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
+                  <path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                <svg class="icon-unmuted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
+                  <path d="M16.5 8.5a5 5 0 010 7M19 6a8 8 0 010 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+                </svg>
+              </button>
+              <button type="button" class="carousel-nav carousel-prev" id="carousel-prev" aria-label="Previous image" hidden>
+                <span aria-hidden="true">←</span>
+              </button>
+              <button type="button" class="carousel-nav carousel-next" id="carousel-next" aria-label="Next image" hidden>
+                <span aria-hidden="true">→</span>
+              </button>
+              <span class="carousel-indicator" id="carousel-indicator" hidden></span>
+            </div>
+            <a class="project-watch-link" id="project-media-watch" target="_blank" rel="noopener" hidden></a>
+            <p class="project-photo-credit" id="project-photo-credit" hidden></p>
+          </div>
+          <div class="project-detail-info">
+            <span class="project-detail-year" id="project-detail-year"></span>
+            <h3 class="project-detail-title" id="project-detail-title"></h3>
+            <p class="project-detail-role" id="project-detail-role"></p>
+            <div class="project-detail-credits" id="project-detail-credits"></div>
+            <div class="project-image-gallery" id="project-image-gallery" hidden></div>
+          </div>
+        </div>
+        <div class="project-extra-carousel" id="project-extra-carousel" hidden>
+          <div class="project-extra-carousel-media">
+            <img id="project-extra-carousel-img" src="" alt="">
+            <button type="button" class="carousel-nav carousel-prev" id="extra-carousel-prev" aria-label="Previous image" hidden>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button type="button" class="carousel-nav carousel-next" id="extra-carousel-next" aria-label="Next image" hidden>
+              <span aria-hidden="true">→</span>
+            </button>
+            <span class="carousel-indicator" id="extra-carousel-indicator" hidden></span>
+          </div>
+        </div>
+        <div class="project-video-carousel" id="project-video-carousel" hidden>
+          <p class="project-video-carousel-caption" id="project-video-carousel-caption"></p>
+          <div class="project-video-carousel-media">
+            <video id="project-video-carousel-video" muted loop playsinline autoplay></video>
+            <button type="button" class="video-audio-toggle" id="video-carousel-audio-toggle" aria-pressed="false" aria-label="Turn video audio on">
               <svg class="icon-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor"/>
                 <path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -94,20 +141,13 @@
                 <path d="M16.5 8.5a5 5 0 010 7M19 6a8 8 0 010 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
               </svg>
             </button>
-            <button type="button" class="carousel-nav carousel-prev" id="carousel-prev" aria-label="Previous image" hidden>
+            <button type="button" class="carousel-nav carousel-prev" id="video-carousel-prev" aria-label="Previous video" hidden>
               <span aria-hidden="true">←</span>
             </button>
-            <button type="button" class="carousel-nav carousel-next" id="carousel-next" aria-label="Next image" hidden>
+            <button type="button" class="carousel-nav carousel-next" id="video-carousel-next" aria-label="Next video" hidden>
               <span aria-hidden="true">→</span>
             </button>
-            <span class="carousel-indicator" id="carousel-indicator" hidden></span>
-          </div>
-          <div class="project-detail-info">
-            <span class="project-detail-year" id="project-detail-year"></span>
-            <h3 class="project-detail-title" id="project-detail-title"></h3>
-            <p class="project-detail-role" id="project-detail-role"></p>
-            <div class="project-detail-credits" id="project-detail-credits"></div>
-            <div class="project-image-gallery" id="project-image-gallery" hidden></div>
+            <span class="carousel-indicator" id="video-carousel-indicator" hidden></span>
           </div>
         </div>
         <div class="project-video-gallery" id="project-video-gallery" hidden></div>
@@ -154,6 +194,7 @@
         <a href="mailto:roccoarreghini@gmail.com" class="contact-email">roccoarreghini@gmail.com</a>
         <div class="contact-links">
           <a href="https://www.instagram.com/rokkoar/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://roccor.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a>
           <a href="tel:+393466770620">+39 346 6770620</a>
         </div>
       </div>

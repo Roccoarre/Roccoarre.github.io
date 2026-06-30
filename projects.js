@@ -24,6 +24,11 @@
    - moreCredits: OPTIONAL — array of { role, name }, shown below the main credits
    - extras:      OPTIONAL — string with the full cast/extras list
    - note:        OPTIONAL — short line shown above the credits (e.g. an award mention)
+   - photoCredit: OPTIONAL — { name, url } photographer credit, shown as a small link under the main carousel
+   - extraCarousel: OPTIONAL — { ratio, images }, a second independent navigable carousel
+                  shown below the description (use ratio: "16/9" for a wide/horizontal format)
+   - videoCarousel: OPTIONAL — { ratio, videos }, a navigable carousel that plays one video
+                  at a time (muted, with an audio toggle) instead of loading them all at once
    ========================================================= */
 
 const PROJECTS = [
@@ -39,13 +44,14 @@ const PROJECTS = [
   },
   {
     year: "2025",
-    title: "Padre N0stro",
+    title: "Padre n0str0",
     role: "Music production & art direction",
     image: "assets/project-4.jpg",
     video: "assets/project-4-video.mp4",
     ratio: "16/9",
     link: "#",
     watch: "https://www.youtube.com/watch?v=ZW6weJZ5uBk",
+    watchUnderMedia: true,
     note: "\u201CPadre Nostro\u201D by MDGN — Candidate for Best Italian Low-Budget Music Video 2026, Videoclip Italia Awards (Official Selection)",
     credits: [
       { role: "Track Written by", name: "Rocco Arreghini, Lorenzo Gabor, Daniele Midena" },
@@ -67,12 +73,92 @@ const PROJECTS = [
       { role: "PA", name: "Martina Menoncello" },
       { role: "Continuity", name: "Eleonora Macchion" }
     ],
-    extras: "Angelica Ardengo, Laura Cappellotto, Antonio Femia, Matteo Favero, Anna Frezza, Elia Introvigne, Francesco Lava, Simone Liberali, Enrico Marcon, Colomba Pellegrino, Beatrice Pizzol, Bianca Scavezzon, Elisa Solinas, Niccolò Verni, Linda Zaghis"
+    extras: "Angelica Ardengo, Laura Cappellotto, Antonio Femia, Matteo Favero, Anna Frezza, Elia Introvigne, Francesco Lava, Simone Liberali, Enrico Marcon, Colomba Pellegrino, Beatrice Pizzol, Bianca Scavezzon, Elisa Solinas, Niccolò Verni, Linda Zaghis",
+    imageGallery: {
+      items: [
+        { image: "assets/project-4-photo.jpeg" }
+      ]
+    }
+  },
+  {
+    year: "2024",
+    title: "Vent0core",
+    role: "Event organization & art direction",
+    description: "Venetocore is a series of events and a collective, founded in May 2024, dedicated to championing the underground music scene of the Veneto region. Working directly within the local area to give space and a voice to local musicians and artists, the project stays away from commercial circuits to offer a radical alternative to the conventional night out, aiming to turn local venues into shared listening ecosystems.",
+    note: "More than just an event, it's a community: connecting people through music, bringing together new generations, and giving visibility to digital electronic niches and emerging local talent. The visual identity of each poster — where photography and graphic design merge with regional iconography — is at the aesthetic core of the project, shaping an identity that's both local and global.",
+    images: [
+      "assets/@loraw-20.jpg",
+      "assets/@loraw-23.jpg"
+    ],
+    ratio: "4/5",
+    link: "#",
+    photoCredit: { name: "Lorenzo Vai", url: "https://www.instagram.com/loraw._/" },
+    extraCarousel: {
+      ratio: "16/9",
+      images: [
+        "assets/Venetocore x Siamounmagazine.jpg",
+        "assets/DSC00995.JPG",
+        "assets/pc.jpeg",
+        "assets/WhatsApp Image 2026-06-29 at 23.31.26 (1).jpeg"
+      ]
+    },
+    extraVideo: {
+      video: "assets/REEL 2 VENETOCORE def.mp4",
+      videoRatio: "16/9",
+      caption: "I worked on the art direction and sound design for this video."
+    },
+    imageGallery: {
+      items: [
+        { carousel: { images: ["assets/IPHONE.png", "assets/six-seven.jpg"] } }
+      ]
+    }
+  },
+  {
+    year: "2023",
+    title: "IT SEEMS N0B0DY WANTS T0 W0RK THESE DAYS",
+    role: "Sound design & art direction",
+    note: "I took part in the final exhibition of the art direction workshop led by Rossana Passalacqua and Francesco Valtolina. The exhibition showcased installations featuring the best works developed during the course, themed around the work world and articulated into four visions that coexist within the space. I took part in a working group that created a video installation called “Il mestiere è il mio piacere 69”.<br><br>Relocated to the “<a href=\"https://www.spaziopunch.com/\" target=\"_blank\" rel=\"noopener\" style=\"text-decoration: underline;\">Spazio Punch</a>” cultural venue, where I managed both the installation and communication aspects and delivered a musical performance during the inauguration.",
+    watch: "https://www.youtube.com/watch?v=qxDdySCl0iQ",
+    watchLabel: "Watch the full video on YouTube",
+    credits: [
+      { role: "A project by", name: "Emanuele Argentieri, Rocco Arreghini, Eleonora Franchi, Elisa Gasparini, Francesca Parolin, Tommaso Tobio" },
+      { role: "Supervised by", name: "Rossana Passalacqua, Francesco Valtolina", spacer: true }
+    ],
+    moreCredits: [
+      { role: "Make-Up", name: "Emma Cisotto" },
+      { role: "Hair", name: "Gabriela Isabel Pizzol" },
+      { role: "Starring", name: "Giovanni Biscarini, Sofia Della Vecchia, Anita Ferrari, Andrea Paolo Onorati, Jacopo Ronchese, Valeria Segna, Elisa Tran, Leonardo Trentin, Lauren" },
+      { role: "Thanks to", name: "Luca Molinari, Silvia Pellizzeri, Silvia Carraro, M9 Museum, and all the technicians and staff" }
+    ],
+    images: [
+      "assets/exhibition-comms-69.png",
+      "assets/exhibition-comms-card.jpg"
+    ],
+    ratio: "2/3",
+    link: "#",
+    extraVideo: {
+      title: "Exhibition Communication Video",
+      video: "assets/exhibition-comms-video.mp4",
+      videoRatio: "1/1",
+      description: "I was responsible for the social and printed communication of the exhibition, and I conceived and created the posters and videos used for it, working with various AI tools to generate and blend images together; I also manipulated the audio from a famous quote in a video interview with Kim Kardashian, from which the exhibition takes its name",
+      watch: "https://www.instagram.com/p/Ct9lFMxvimH/",
+      watchLabel: "Watch on Instagram"
+    },
+    imageGallery: {
+      maxWidth: "960px",
+      items: [
+        { note: true, full: true },
+        { image: "assets/exhibition-backstage.jpeg", full: true },
+        { video: "assets/loop.mp4", full: true, watch: true },
+        { bio: true, full: true },
+        { image: "assets/SCHERMO1.png", full: true }
+      ]
+    }
   },
   {
     year: "2022",
-    title: "Fashion at Iuav 2022",
-    role: "Web & social content, art direction, sound design",
+    title: "Fashi0n at Iuav 2022",
+    role: "Web & social content, sound design, art direction",
     description: "The annual fashion show of Iuav University of Venice, celebrating the graduating students' work. The 2022 edition took place on July 1st at the Pier Luigi Penzo Stadium in Venice, in collaboration with Venezia FC and powered by Xiaomi, featuring graduates from the Bachelor's in Fashion Design and Multimedia Arts and the Master's in Visual Arts and Fashion. The show's social communication was developed together with second-year students of the \"Communication and New Fashion Media\" course; I contributed to the web and social content, art direction and sound design.",
     image: "assets/project-1.jpg",
     video: "assets/project-1-video.mp4",
@@ -106,33 +192,17 @@ const PROJECTS = [
     }
   },
   {
-    year: "2021",
-    title: "Y0ung M0nsters",
-    role: "Art direction & sound design",
-    description: "Young Monsters is an annual independent magazine born in Venice in 2021, a space for experimentation across fashion, contemporary culture and visual arts. Co-led the art direction of an eight-page story and the sound design for the accompanying videos.",
-    image: "assets/project-2.jpg",
-    link: "#"
-  },
-  {
-    year: "2021",
-    title: "Searching for Family",
-    role: "Direction & video",
-    description: "A university short film made for the \u201CDigital Materials for Fashion\u201D course, exploring how technology quietly replaces affection inside modern families through the metaphor of digital glitch and error.",
-    image: "assets/project-3.jpg",
-    link: "#"
-  },
-  {
-    year: "2021",
+    year: "2022",
     title: "Acqua Magica",
-    role: "Event organization, art direction, sound design",
-    description: "Acqua Magica is an independent mini-festival aiming to bring value to the Veneto countryside around the Piave river. It first took place in the summer of 2021, during one of the driest seasons on record: the event reflected on that socio-ecological theme while celebrating natural spaces in the area. I worked on it together with Daniele Midena.",
+    role: "Event organization, sound design, art direction",
+    description: "Acqua Magica is an independent mini-festival aiming to bring value to the Veneto countryside around the Piave river. It first took place in the summer of 2022, during one of the driest seasons on record: the event reflected on that socio-ecological theme while celebrating natural spaces in the area. I worked on it together with Daniele Midena.",
     images: ["assets/project-6.jpg", "assets/project-6d.jpg"],
     ratio: "999/1400",
     link: "#",
     extraVideo: {
-      title: "Event video",
       video: "assets/project-6-video.mp4",
-      videoRatio: "480/848"
+      videoRatio: "480/848",
+      videoMaxWidth: "360px"
     },
     imageGallery: {
       title: "Acqua Magica — gallery",
@@ -140,6 +210,38 @@ const PROJECTS = [
       items: [
         { image: "assets/project-6b.jpg" },
         { image: "assets/project-6c.jpg" }
+      ]
+    }
+  },
+  {
+    year: "2021",
+    title: "MDGN",
+    role: "Music production & art direction",
+    description: "MDGN is an independent music project born in 2021 in the province of Treviso. Its sound identity is built around a blend of electronic music and avant-pop atmospheres, with a strong focus on experimentation and timbral research. The visual side is an integral part of the band's identity, curated with the same care as the songwriting and music production, with the goal of creating a coherent and recognizable imagery.",
+    images: [
+      "assets/P1000962-HDR.jpg",
+      "assets/1-43.png",
+      "assets/POS2.jpg",
+      "assets/1-68.png",
+      "assets/P1001039-HDR-Modifica.png"
+    ],
+    ratio: "2/3",
+    link: "#",
+    photoCredit: { name: "Elia Introvigne", url: "https://www.instagram.com/eliopsoas/" },
+    imageGallery: {
+      items: [
+        { image: "assets/schiena.JPG", full: true, credit: { name: "Emanuele Argentieri", url: "https://www.instagram.com/feb.21.2002/" } }
+      ]
+    },
+    videoCarousel: {
+      ratio: "16/9",
+      caption: "Videos extracted from our live performances.",
+      videos: [
+        "assets/VIDEO 1 (7).mp4",
+        "assets/VIDEO 1 (2).mp4",
+        "assets/VIDEO 1 (3).mp4",
+        "assets/VIDEO 1 (4).mp4",
+        "assets/VIDEO 1 (6).mp4"
       ]
     }
   }

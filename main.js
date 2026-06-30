@@ -51,6 +51,16 @@ function muteExtraVideoAudio(){
   }
 }
 
+// silenzia il carosello video (es. i live di un progetto), se presente
+function muteVideoCarouselAudio(){
+  if (!videoCarouselVideo) return;
+  videoCarouselVideo.muted = true;
+  if (videoCarouselAudioToggle){
+    videoCarouselAudioToggle.setAttribute('aria-pressed', 'false');
+    videoCarouselAudioToggle.setAttribute('aria-label', 'Turn video audio on');
+  }
+}
+
 if (bgAudio && audioToggle){
   audioToggle.addEventListener('click', () => {
     const isPlaying = audioToggle.getAttribute('aria-pressed') === 'true';
@@ -62,6 +72,7 @@ if (bgAudio && audioToggle){
       muteVideoAudio();
       muteGalleryAudio();
       muteExtraVideoAudio();
+      muteVideoCarouselAudio();
       // play() richiede un'interazione utente: siamo dentro un click, quindi è permesso dai browser
       bgAudio.play().catch(() => {
         // se il browser blocca comunque la riproduzione, lo stato resta muto
@@ -89,6 +100,7 @@ const detailVideo = document.getElementById('project-detail-video');
 const carouselPrev = document.getElementById('carousel-prev');
 const carouselNext = document.getElementById('carousel-next');
 const carouselIndicator = document.getElementById('carousel-indicator');
+const mediaWatchLink = document.getElementById('project-media-watch');
 const videoAudioToggle = document.getElementById('video-audio-toggle');
 const detailYear = document.getElementById('project-detail-year');
 const detailTitle = document.getElementById('project-detail-title');
@@ -97,6 +109,19 @@ const detailCredits = document.getElementById('project-detail-credits');
 const videoGalleryEl = document.getElementById('project-video-gallery');
 const extraVideoEl = document.getElementById('project-extra-video');
 const imageGalleryEl = document.getElementById('project-image-gallery');
+const photoCreditEl = document.getElementById('project-photo-credit');
+const extraCarouselEl = document.getElementById('project-extra-carousel');
+const extraCarouselImg = document.getElementById('project-extra-carousel-img');
+const extraCarouselPrev = document.getElementById('extra-carousel-prev');
+const extraCarouselNext = document.getElementById('extra-carousel-next');
+const extraCarouselIndicator = document.getElementById('extra-carousel-indicator');
+const videoCarouselEl = document.getElementById('project-video-carousel');
+const videoCarouselCaption = document.getElementById('project-video-carousel-caption');
+const videoCarouselVideo = document.getElementById('project-video-carousel-video');
+const videoCarouselPrev = document.getElementById('video-carousel-prev');
+const videoCarouselNext = document.getElementById('video-carousel-next');
+const videoCarouselIndicator = document.getElementById('video-carousel-indicator');
+const videoCarouselAudioToggle = document.getElementById('video-carousel-audio-toggle');
 
 function pad(n){ return String(n).padStart(2, '0'); }
 
@@ -110,7 +135,6 @@ PROJECTS.forEach((p, i) => {
       <span class="project-name">${p.title.replace(/O/g, '0')}</span>
       <span class="project-role">${p.role}</span>
       <span class="project-arrow" aria-hidden="true">↗</span>
-      <img class="project-thumb-mobile" src="${p.image}" alt="" loading="lazy" style="aspect-ratio: ${p.ratio || '4/5'};">
     </a>
   `;
   listEl.appendChild(li);
@@ -146,9 +170,28 @@ if (videoAudioToggle){
       muteSiteAudio();
       muteGalleryAudio();
       muteExtraVideoAudio();
+      muteVideoCarouselAudio();
       detailVideo.muted = false;
       videoAudioToggle.setAttribute('aria-pressed', 'true');
       videoAudioToggle.setAttribute('aria-label', 'Turn video audio off');
+    }
+  });
+}
+
+if (videoCarouselAudioToggle){
+  videoCarouselAudioToggle.addEventListener('click', () => {
+    const isOn = videoCarouselAudioToggle.getAttribute('aria-pressed') === 'true';
+
+    if (isOn){
+      muteVideoCarouselAudio();
+    } else {
+      muteSiteAudio();
+      muteVideoAudio();
+      muteGalleryAudio();
+      muteExtraVideoAudio();
+      videoCarouselVideo.muted = false;
+      videoCarouselAudioToggle.setAttribute('aria-pressed', 'true');
+      videoCarouselAudioToggle.setAttribute('aria-label', 'Turn video audio off');
     }
   });
 }
@@ -213,17 +256,28 @@ function openProjectDetail(index){
     }
   }
 
+  if (photoCreditEl){
+    if (p.photoCredit){
+      photoCreditEl.innerHTML = `Photo by <a href="${p.photoCredit.url}" target="_blank" rel="noopener">${escapeHtml(p.photoCredit.name)}</a>`;
+      photoCreditEl.hidden = false;
+    } else {
+      photoCreditEl.hidden = true;
+      photoCreditEl.innerHTML = '';
+    }
+  }
+
   detailYear.textContent = p.year;
   detailTitle.textContent = p.title;
   detailRole.textContent = p.role;
 
-  let html = '';
-  if (p.description){
-    html += `<p class="project-detail-note">${escapeHtml(p.description)}</p>`;
-  }
-  if (p.note){
-    html += `<p class="project-detail-note">${escapeHtml(p.note)}</p>`;
-  }
+  const descriptionHtml = p.description ? `<p class="project-detail-note">${escapeHtml(p.description)}</p>` : '';
+  // a differenza di description, note può contenere markup di fiducia (es. un link), quindi non va in escapeHtml
+  const noteHtml = p.note ? `<p class="project-detail-note">${p.note}</p>` : '';
+  const descriptionInGallery = !!(p.imageGallery && p.imageGallery.items.some(i => i.description));
+  const noteInGallery = !!(p.imageGallery && p.imageGallery.items.some(i => i.note));
+
+  let html = descriptionInGallery ? '' : descriptionHtml;
+  html += noteInGallery ? '' : noteHtml;
   if (p.credits && p.credits.length){
     html += '<dl>';
     p.credits.forEach(c => {
@@ -247,6 +301,8 @@ function openProjectDetail(index){
       </div>
     `;
   }
+  let watchLinkHtml = '';
+  let watchInnerHtml = '';
   if (p.watch){
     let label = p.watchLabel;
     if (!label){
@@ -255,10 +311,21 @@ function openProjectDetail(index){
       else if (p.watch.includes('vimeo')) label = 'Watch on Vimeo';
       else label = 'Watch the video';
     }
-    html += `<a class="project-watch-link" href="${p.watch}" target="_blank" rel="noopener">${escapeHtml(label)} <span aria-hidden="true">↗</span></a>`;
+    watchInnerHtml = `${escapeHtml(label)} <span aria-hidden="true">↗</span>`;
+    watchLinkHtml = `<a class="project-watch-link" href="${p.watch}" target="_blank" rel="noopener">${watchInnerHtml}</a>`;
   }
-  detailCredits.innerHTML = html;
-
+  const watchInGallery = !!(p.imageGallery && p.imageGallery.items.some(i => i.watch));
+  if (mediaWatchLink){
+    if (p.watch && p.watchUnderMedia){
+      mediaWatchLink.href = p.watch;
+      mediaWatchLink.innerHTML = watchInnerHtml;
+      mediaWatchLink.hidden = false;
+    } else {
+      mediaWatchLink.hidden = true;
+      mediaWatchLink.innerHTML = '';
+    }
+  }
+  html += (watchInGallery || p.watchUnderMedia) ? '' : watchLinkHtml;
   if (p.videoGallery && videoGalleryEl){
     const g = p.videoGallery;
     let galleryHtml = `<h4 class="project-video-gallery-title">${escapeHtml(g.title)}</h4>`;
@@ -300,6 +367,7 @@ function openProjectDetail(index){
         muteSiteAudio();
         muteVideoAudio();
         muteExtraVideoAudio();
+        muteVideoCarouselAudio();
         videoGalleryEl.querySelectorAll('video').forEach(v => { v.muted = true; });
         videoGalleryEl.querySelectorAll('.gallery-audio-toggle').forEach(b => {
           b.setAttribute('aria-pressed', 'false');
@@ -320,12 +388,12 @@ function openProjectDetail(index){
 
   if (p.extraVideo && extraVideoEl){
     const ev = p.extraVideo;
-    let extraHtml = `<h4 class="project-extra-video-title">${escapeHtml(ev.title)}</h4>`;
+    let extraHtml = ev.title ? `<h4 class="project-extra-video-title">${escapeHtml(ev.title)}</h4>` : '';
     if (ev.description){
       extraHtml += `<p class="project-extra-video-description">${escapeHtml(ev.description)}</p>`;
     }
     extraHtml += `
-      <div class="project-extra-video-wrap">
+      <div class="project-extra-video-wrap" style="${ev.videoMaxWidth ? `max-width: ${ev.videoMaxWidth};` : ''}">
         <video src="${ev.video}" muted loop playsinline autoplay style="aspect-ratio: ${ev.videoRatio || '16/9'};"></video>
         <button type="button" class="video-audio-toggle extra-video-audio-toggle" aria-pressed="false" aria-label="Turn video audio on">
           <svg class="icon-muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -339,6 +407,9 @@ function openProjectDetail(index){
         </button>
       </div>
     `;
+    if (ev.caption){
+      extraHtml += `<p class="project-extra-video-caption">${escapeHtml(ev.caption)}</p>`;
+    }
     if (ev.watch){
       const label = ev.watchLabel || 'Watch the video';
       extraHtml += `<a class="project-watch-link" href="${ev.watch}" target="_blank" rel="noopener">${escapeHtml(label)} <span aria-hidden="true">↗</span></a>`;
@@ -355,6 +426,7 @@ function openProjectDetail(index){
       muteSiteAudio();
       muteVideoAudio();
       muteGalleryAudio();
+      muteVideoCarouselAudio();
       extraVideoTag.muted = true;
       extraToggle.setAttribute('aria-pressed', 'false');
       extraToggle.setAttribute('aria-label', 'Turn video audio on');
@@ -370,23 +442,132 @@ function openProjectDetail(index){
     extraVideoEl.hidden = true;
   }
 
+  if (p.extraCarousel && extraCarouselEl){
+    const ec = p.extraCarousel;
+    extraCarouselEl.querySelector('.project-extra-carousel-media').style.aspectRatio = ec.ratio || '16/9';
+    let extraIndex = 0;
+    const showExtraImage = (i) => {
+      extraIndex = Math.max(0, Math.min(i, ec.images.length - 1));
+      extraCarouselImg.src = ec.images[extraIndex];
+      extraCarouselImg.alt = p.title;
+      extraCarouselIndicator.textContent = `${extraIndex + 1} / ${ec.images.length}`;
+      extraCarouselPrev.hidden = extraIndex === 0;
+      extraCarouselNext.hidden = extraIndex === ec.images.length - 1;
+    };
+    showExtraImage(0);
+    extraCarouselIndicator.hidden = ec.images.length <= 1;
+    extraCarouselPrev.onclick = () => showExtraImage(extraIndex - 1);
+    extraCarouselNext.onclick = () => showExtraImage(extraIndex + 1);
+    extraCarouselEl.hidden = false;
+  } else if (extraCarouselEl){
+    extraCarouselEl.hidden = true;
+  }
+
+  if (p.videoCarousel && videoCarouselEl){
+    const vc = p.videoCarousel;
+    if (videoCarouselCaption){
+      videoCarouselCaption.textContent = vc.caption || '';
+      videoCarouselCaption.hidden = !vc.caption;
+    }
+    videoCarouselEl.querySelector('.project-video-carousel-media').style.aspectRatio = vc.ratio || '16/9';
+    let videoIndex = 0;
+    const showVideo = (i) => {
+      videoIndex = Math.max(0, Math.min(i, vc.videos.length - 1));
+      videoCarouselVideo.src = vc.videos[videoIndex];
+      videoCarouselVideo.muted = true; // resetta sempre muto al cambio video, l'utente lo attiva se vuole
+      videoCarouselVideo.currentTime = 0;
+      videoCarouselVideo.play().catch(() => {});
+      if (videoCarouselAudioToggle){
+        videoCarouselAudioToggle.setAttribute('aria-pressed', 'false');
+        videoCarouselAudioToggle.setAttribute('aria-label', 'Turn video audio on');
+      }
+      videoCarouselIndicator.textContent = `${videoIndex + 1} / ${vc.videos.length}`;
+      videoCarouselPrev.hidden = videoIndex === 0;
+      videoCarouselNext.hidden = videoIndex === vc.videos.length - 1;
+    };
+    showVideo(0);
+    videoCarouselIndicator.hidden = vc.videos.length <= 1;
+    videoCarouselPrev.onclick = () => showVideo(videoIndex - 1);
+    videoCarouselNext.onclick = () => showVideo(videoIndex + 1);
+    videoCarouselEl.hidden = false;
+  } else if (videoCarouselEl){
+    videoCarouselVideo.pause();
+    videoCarouselVideo.removeAttribute('src');
+    videoCarouselEl.hidden = true;
+  }
+
+  let bioMovedToGallery = false;
   if (p.imageGallery && imageGalleryEl){
     const ig = p.imageGallery;
-    let imgHtml = '<div class="image-gallery-grid">';
-    ig.items.forEach(item => {
+    const singleClass = (ig.items.length === 1 || ig.layout === 'stacked') ? ' image-gallery-grid--single' : '';
+    const widthStyle = ig.maxWidth ? ` style="max-width: ${ig.maxWidth};"` : '';
+    let imgHtml = `<div class="image-gallery-grid${singleClass}"${widthStyle}>`;
+    ig.items.forEach((item, itemIdx) => {
+      const fullClass = item.full ? ' image-gallery-item--full' : '';
+      let media;
+      if (item.description){
+        media = `<div class="image-gallery-bio">${descriptionHtml}</div>`;
+      } else if (item.note){
+        media = `<div class="image-gallery-bio">${noteHtml}</div>`;
+      } else if (item.bio){
+        media = `<div class="image-gallery-bio">${html}</div>`;
+        bioMovedToGallery = true;
+      } else if (item.video){
+        media = `<video src="${item.video}" autoplay muted loop playsinline></video>`;
+        if (item.watch) media += `<div class="image-gallery-video-watch">${watchLinkHtml}</div>`;
+      } else if (item.carousel){
+        const ci = item.carousel.images;
+        const indHidden = ci.length <= 1 ? ' hidden' : '';
+        media = `
+          <div class="image-gallery-carousel" data-gallery-carousel="${itemIdx}">
+            <img src="${ci[0]}" alt="">
+            <button type="button" class="carousel-nav carousel-prev" aria-label="Previous image" hidden><span aria-hidden="true">←</span></button>
+            <button type="button" class="carousel-nav carousel-next" aria-label="Next image"${ci.length <= 1 ? ' hidden' : ''}><span aria-hidden="true">→</span></button>
+            <span class="carousel-indicator"${indHidden}>1 / ${ci.length}</span>
+          </div>
+        `;
+      } else {
+        media = `<img src="${item.image}" alt="">`;
+        if (item.credit){
+          media += `<p class="image-gallery-caption">Photo by <a href="${item.credit.url}" target="_blank" rel="noopener">${escapeHtml(item.credit.name)}</a></p>`;
+        }
+      }
+      const itemStyle = item.maxWidth ? ` style="max-width: ${item.maxWidth}; margin: 0 auto;"` : '';
       imgHtml += `
-        <div class="image-gallery-item">
-          <img src="${item.image}" alt="">
+        <div class="image-gallery-item${fullClass}"${itemStyle}>
+          ${media}
         </div>
       `;
     });
     imgHtml += '</div>';
     imageGalleryEl.innerHTML = imgHtml;
     imageGalleryEl.hidden = false;
+
+    ig.items.forEach((item, itemIdx) => {
+      if (!item.carousel) return;
+      const wrap = imageGalleryEl.querySelector(`.image-gallery-carousel[data-gallery-carousel="${itemIdx}"]`);
+      if (!wrap) return;
+      const images = item.carousel.images;
+      const img = wrap.querySelector('img');
+      const prevBtn = wrap.querySelector('.carousel-prev');
+      const nextBtn = wrap.querySelector('.carousel-next');
+      const indicator = wrap.querySelector('.carousel-indicator');
+      let cIdx = 0;
+      const showImg = (i) => {
+        cIdx = Math.max(0, Math.min(i, images.length - 1));
+        img.src = images[cIdx];
+        indicator.textContent = `${cIdx + 1} / ${images.length}`;
+        prevBtn.hidden = cIdx === 0;
+        nextBtn.hidden = cIdx === images.length - 1;
+      };
+      prevBtn.onclick = () => showImg(cIdx - 1);
+      nextBtn.onclick = () => showImg(cIdx + 1);
+    });
   } else if (imageGalleryEl){
     imageGalleryEl.innerHTML = '';
     imageGalleryEl.hidden = true;
   }
+  detailCredits.innerHTML = bioMovedToGallery ? '' : html;
 
   listEl.hidden = true;
   detailEl.hidden = false;
@@ -403,6 +584,7 @@ function closeProjectDetail(){
     videoGalleryEl.innerHTML = '';
     videoGalleryEl.hidden = true;
   }
+  if (videoCarouselVideo) videoCarouselVideo.pause();
 }
 
 listEl.addEventListener('click', (e) => {
