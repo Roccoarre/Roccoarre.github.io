@@ -51,13 +51,7 @@ const PROJECTS = [
         "assets/CLIP 2.mp4",
         "assets/CLIP 4.mp4"
       ],
-      captions: [
-        "A moment of near-silence before the next attack.",
-        "A first gesture on the violin, still searching for its shape.",
-        "The manipulation takes over, pulling the sound out of tune.",
-        "Tension builds as the instrument starts to resist.",
-        "The closing fragment, sound left to decay on its own."
-      ]
+      caption: "Fragments from the live performance."
     }
   },
   {

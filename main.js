@@ -1,6 +1,22 @@
 // ===== Anno corrente nel footer =====
 document.getElementById('year').textContent = new Date().getFullYear();
 
+// ===== Video piccolo della hero: forza il play =====
+// su alcuni browser mobile l'attributo autoplay da solo non basta quando il
+// <video> ha più <source media="..."> per servire un file diverso da telefono:
+// il cambio sorgente in corsa può far perdere il permesso di autoplay senza gesto utente
+const heroCenterVideo = document.querySelector('.hero-center-image video');
+if (heroCenterVideo){
+  const tryPlay = () => heroCenterVideo.play().catch(() => {});
+  heroCenterVideo.muted = true;
+  if (heroCenterVideo.readyState >= 2){
+    tryPlay();
+  } else {
+    heroCenterVideo.addEventListener('loadeddata', tryPlay, { once: true });
+  }
+  window.addEventListener('pageshow', tryPlay);
+}
+
 // ===== Live clock, Rome timezone =====
 const heroClock = document.getElementById('hero-clock');
 if (heroClock){
