@@ -34,6 +34,34 @@
 const PROJECTS = [
   {
     year: "2026",
+    title: "I'm about to crash",
+    role: "Music production & live performance",
+    description: "“I’m about to crash” is a performance born from the dialogue between Emanuele Argentieri and Rocco Arreghini. A sonic ecosystem that stages improvisation as a catalyst for tension and friction. The violin and its live manipulation don't follow a linear script, but a dramaturgy of the unforeseen. Sound is treated as a living entity, a body whose processes of decay become signs of a life that resists.",
+    image: "assets/I'm about to crash cover.png",
+    ratio: "1/1",
+    note: "Our latest performance took place June 13th at Nusca Festival, an independent festival dedicated to cinema and publishing in Venice.",
+    watch: "https://www.instagram.com/nuscafestival/reel/DYxIrd4MceL/",
+    link: "#",
+    videoCarousel: {
+      ratio: "16/9",
+      videos: [
+        "assets/CLIP 0.mp4",
+        "assets/CLIP 1.mp4",
+        "assets/CLIP 2.mp4",
+        "assets/CLIP 3.mp4",
+        "assets/CLIP 4.mp4"
+      ],
+      captions: [
+        "A first gesture on the violin, still searching for its shape.",
+        "The manipulation takes over, pulling the sound out of tune.",
+        "Tension builds as the instrument starts to resist.",
+        "A moment of near-silence before the next attack.",
+        "The closing fragment, sound left to decay on its own."
+      ]
+    }
+  },
+  {
+    year: "2026",
     title: "CORE",
     role: "Bachelor's thesis",
     description: "CORE is my Bachelor's thesis project for the degree in Fashion Design at Iuav University of Venice, Communication and New Fashion Media curriculum. The thesis looks at the contemporary evolution of the \"-core\" suffix, examining its aesthetic and cultural implications within the digital media ecosystem: it starts by mapping today's cultural landscape, then moves on to propose some tools for approaching it. The full title, \"CORE — Coreanthology\", builds on a coined second word that merges three semantic fields: the \"-core\" suffix itself, the notion of hauntology as developed by Mark Fisher, and the word anthology.",
@@ -93,6 +121,9 @@ const PROJECTS = [
     ratio: "4/5",
     link: "#",
     photoCredit: { name: "Lorenzo Vai", url: "https://www.instagram.com/loraw._/" },
+    socialLinks: [
+      { label: "Instagram", url: "https://www.instagram.com/venetocore/" }
+    ],
     extraCarousel: {
       ratio: "16/9",
       images: [
@@ -132,8 +163,8 @@ const PROJECTS = [
       { role: "Thanks to", name: "Luca Molinari, Silvia Pellizzeri, Silvia Carraro, M9 Museum, and all the technicians and staff" }
     ],
     images: [
-      "assets/exhibition-comms-69.png",
-      "assets/exhibition-comms-card.jpg"
+      "assets/exhibition-comms-card.jpg",
+      "assets/exhibition-comms-69.jpg"
     ],
     ratio: "2/3",
     link: "#",
@@ -229,6 +260,11 @@ const PROJECTS = [
     ratio: "2/3",
     link: "#",
     photoCredit: { name: "Elia Introvigne", url: "https://www.instagram.com/eliopsoas/" },
+    socialLinks: [
+      { label: "Instagram", url: "https://www.instagram.com/mdgn4life" },
+      { label: "Spotify", url: "https://open.spotify.com/intl-it/artist/1tZ8de1mFvlEzhjD2pzAde?si=-xUGIPbiT1yWpH8WR5ToLg" },
+      { label: "Apple Music", url: "https://music.apple.com/it/artist/mdgn/1754056037" }
+    ],
     imageGallery: {
       items: [
         { image: "assets/schiena.JPG", full: true, credit: { name: "Emanuele Argentieri", url: "https://www.instagram.com/feb.21.2002/" } }

@@ -242,13 +242,6 @@ img{ max-width: 100%; display: block; }
      si fonde con il nero piatto del resto del sito invece di avere uno stacco visibile */
   filter: grayscale(15%) contrast(1.15) brightness(0.85);
 }
-.hero-media::after{
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.95) 100%);
-}
-
 .hero-content{
   position: relative;
   z-index: 2;
@@ -624,6 +617,7 @@ img{ max-width: 100%; display: block; }
   line-height: 1.6;
   color: var(--muted);
   margin: 12px 0 0;
+  text-align: center;
 }
 .image-gallery-caption a{
   color: var(--muted);
@@ -760,6 +754,7 @@ img{ max-width: 100%; display: block; }
   transition: color 0.1s linear;
 }
 .project-photo-credit a:hover{ color: var(--fg); }
+#project-extra-carousel-credit{ text-align: center; }
 .project-detail-media img,
 .project-detail-media video{
   width: 100%;
@@ -914,6 +909,13 @@ img{ max-width: 100%; display: block; }
 }
 .project-watch-link:hover{ opacity: 0.8; }
 
+.project-social-links{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.project-social-links .project-watch-link{ margin-top: 24px; }
+
 .credit-row{
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -954,7 +956,7 @@ img{ max-width: 100%; display: block; }
 
 .about-grid{
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
+  grid-template-columns: 0.9fr 1.1fr;
   gap: 80px;
 }
 @media (max-width: 860px){
@@ -1007,6 +1009,17 @@ img{ max-width: 100%; display: block; }
   border: 1px solid var(--line);
   padding: 14px 20px;
   transition: border-color 0.1s linear, color 0.1s linear;
+}
+.about-cv-link{
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 32px;
+}
+@media (min-width: 861px){
+  .about-cv-link{
+    padding: 18px 32px;
+    font-size: 14px;
+  }
 }
 .cv-link:hover{
   border-color: var(--fg);

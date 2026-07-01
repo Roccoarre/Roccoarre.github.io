@@ -279,6 +279,13 @@ function openProjectDetail(index){
 
   let html = descriptionInGallery ? '' : descriptionHtml;
   html += noteInGallery ? '' : noteHtml;
+  if (p.socialLinks && p.socialLinks.length){
+    html += '<div class="project-social-links">';
+    p.socialLinks.forEach(s => {
+      html += `<a class="project-watch-link" href="${s.url}" target="_blank" rel="noopener">${escapeHtml(s.label)} <span aria-hidden="true">↗</span></a>`;
+    });
+    html += '</div>';
+  }
   if (p.credits && p.credits.length){
     html += '<dl>';
     p.credits.forEach(c => {
@@ -479,10 +486,6 @@ function openProjectDetail(index){
 
   if (p.videoCarousel && videoCarouselEl){
     const vc = p.videoCarousel;
-    if (videoCarouselCaption){
-      videoCarouselCaption.textContent = vc.caption || '';
-      videoCarouselCaption.hidden = !vc.caption;
-    }
     videoCarouselEl.querySelector('.project-video-carousel-media').style.aspectRatio = vc.ratio || '16/9';
     let videoIndex = 0;
     const showVideo = (i) => {
@@ -498,6 +501,11 @@ function openProjectDetail(index){
       videoCarouselIndicator.textContent = `${videoIndex + 1} / ${vc.videos.length}`;
       videoCarouselPrev.hidden = videoIndex === 0;
       videoCarouselNext.hidden = videoIndex === vc.videos.length - 1;
+      if (videoCarouselCaption){
+        const text = vc.captions ? vc.captions[videoIndex] : vc.caption;
+        videoCarouselCaption.textContent = text || '';
+        videoCarouselCaption.hidden = !text;
+      }
     };
     showVideo(0);
     videoCarouselIndicator.hidden = vc.videos.length <= 1;
