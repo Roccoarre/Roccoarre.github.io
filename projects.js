@@ -45,17 +45,17 @@ const PROJECTS = [
     videoCarousel: {
       ratio: "16/9",
       videos: [
+        "assets/CLIP 3.mp4",
         "assets/CLIP 0.mp4",
         "assets/CLIP 1.mp4",
         "assets/CLIP 2.mp4",
-        "assets/CLIP 3.mp4",
         "assets/CLIP 4.mp4"
       ],
       captions: [
+        "A moment of near-silence before the next attack.",
         "A first gesture on the violin, still searching for its shape.",
         "The manipulation takes over, pulling the sound out of tune.",
         "Tension builds as the instrument starts to resist.",
-        "A moment of near-silence before the next attack.",
         "The closing fragment, sound left to decay on its own."
       ]
     }
@@ -65,7 +65,7 @@ const PROJECTS = [
     title: "CORE",
     role: "Bachelor's thesis",
     description: "CORE is my Bachelor's thesis project for the degree in Fashion Design at Iuav University of Venice, Communication and New Fashion Media curriculum. The thesis looks at the contemporary evolution of the \"-core\" suffix, examining its aesthetic and cultural implications within the digital media ecosystem: it starts by mapping today's cultural landscape, then moves on to propose some tools for approaching it. The full title, \"CORE — Coreanthology\", builds on a coined second word that merges three semantic fields: the \"-core\" suffix itself, the notion of hauntology as developed by Mark Fisher, and the word anthology.",
-    images: ["assets/project-7-new0.jpg", "assets/project-7-new1.jpg", "assets/project-7-new2.jpg", "assets/project-7-new3.jpg", "assets/project-7-new4.jpg"],
+    images: ["assets/WhatsApp Image 2026-07-01 at 03.06.08.png", "assets/project-7-new0.jpg", "assets/project-7-new1.jpg", "assets/project-7-new2.jpg", "assets/project-7-new3.jpg", "assets/project-7-new4.jpg"],
     ratio: "16/9",
     layout: "stacked",
     link: "#"
@@ -157,6 +157,7 @@ const PROJECTS = [
       { role: "Supervised by", name: "Rossana Passalacqua, Francesco Valtolina", spacer: true }
     ],
     moreCredits: [
+      { role: "Sound design", name: "Rocco Arreghini" },
       { role: "Make-Up", name: "Emma Cisotto" },
       { role: "Hair", name: "Gabriela Isabel Pizzol" },
       { role: "Starring", name: "Giovanni Biscarini, Sofia Della Vecchia, Anita Ferrari, Andrea Paolo Onorati, Jacopo Ronchese, Valeria Segna, Elisa Tran, Leonardo Trentin, Lauren" },
@@ -262,8 +263,7 @@ const PROJECTS = [
     photoCredit: { name: "Elia Introvigne", url: "https://www.instagram.com/eliopsoas/" },
     socialLinks: [
       { label: "Instagram", url: "https://www.instagram.com/mdgn4life" },
-      { label: "Spotify", url: "https://open.spotify.com/intl-it/artist/1tZ8de1mFvlEzhjD2pzAde?si=-xUGIPbiT1yWpH8WR5ToLg" },
-      { label: "Apple Music", url: "https://music.apple.com/it/artist/mdgn/1754056037" }
+      { label: "Spotify", url: "https://open.spotify.com/intl-it/artist/1tZ8de1mFvlEzhjD2pzAde?si=-xUGIPbiT1yWpH8WR5ToLg" }
     ],
     imageGallery: {
       items: [
