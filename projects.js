@@ -51,7 +51,7 @@ const PROJECTS = [
         "assets/CLIP 2.mp4",
         "assets/CLIP 4.mp4"
       ],
-      caption: "Fragments from the live performance."
+      caption: "Fragments from the live performances."
     }
   },
   {
